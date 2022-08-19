@@ -59,8 +59,8 @@ You can take a look at this demo on how to add a new DNS entry under the `ingres
 
 ![img](img/add-dns.gif)
 
-Don't forget add the new DNS entry to the `/etc/hosts` file once you have added it to Consul KV!
+Don't forget to add the new DNS entry to the `/etc/hosts` file after you have added it to Consul KV!
 
 ## Clean up
 
-Once you are done, you can run `vagrant destroy` to remove the VM.
+Once you are done, run `vagrant destroy` to remove the VM.
