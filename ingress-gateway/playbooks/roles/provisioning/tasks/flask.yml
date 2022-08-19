@@ -1,0 +1,21 @@
+---
+- name: Copy flask script
+  ansible.builtin.copy:
+    src: "files/deploy/"
+    dest: "/home/vagrant/deploy/"
+  notify: 
+    - restart gunicorn process
+
+- name: Install flask, gunicorn
+  ansible.builtin.pip:
+    requirements: /home/vagrant/deploy/requirements.txt
+
+- name: Copy gunicorn conf
+  ansible.builtin.template:
+    src: "templates/gunicorn.conf.j2"
+    dest: "/etc/supervisor/conf.d/gunicorn.conf"
+
+- name: Copy gunicorn service register conf
+  ansible.builtin.template:
+    src: "templates/hello.hcl.j2"
+    dest: "/etc/consul/conf.d/hello.hcl"

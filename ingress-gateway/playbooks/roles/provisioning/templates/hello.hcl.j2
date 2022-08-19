@@ -1,0 +1,15 @@
+service {
+  name = "hello-world"
+  tags = [
+    "hello-world",
+    "flask"
+  ]
+  port = 5000
+  checks = {
+      id = "hello"
+      name = "/health"
+      http = "http://{{ ansible_eth1.ipv4.address }}:5000/health"
+      interval = "30s"
+      timeout = "5s"
+    }
+}

@@ -1,0 +1,37 @@
+---
+consul_version: "1.13.1"
+consul_template_version: "0.29.1"
+
+consul_url: https://releases.hashicorp.com/consul/{{ consul_version }}/consul_{{ consul_version }}_linux_amd64.zip
+consul_template_url: https://releases.hashicorp.com/consul-template/{{ consul_template_version }}/consul-template_{{ consul_template_version }}_linux_amd64.zip
+
+packages:
+  - net-tools
+  - curl
+  - python3-pip
+  - nginx
+  - zip
+
+directories:
+  - /etc/supervisor/conf.d/
+  - /etc/consul/conf.d/
+  - /etc/consul-template/conf.d/
+  - /var/log/supervisor/
+  - /home/vagrant/deploy/
+  - /local/certs/
+
+supervisor_config:
+  - {src: files/supervisord.conf, dest: /etc/supervisor/supervisord.conf }
+  - {src: files/supervisor.service, dest: /usr/lib/systemd/system/supervisor.service }
+
+consul_config:
+  - {src: files/consul.conf, dest: /etc/supervisor/conf.d/consul.conf }
+
+template_files:
+  - {src: templates/consul-template.conf.j2, dest: /etc/supervisor/conf.d/consul-template.conf }
+  - {src: templates/consul.hcl.j2, dest: /etc/consul/conf.d/consul.hcl }
+  - {src: templates/consul-ui.hcl.j2, dest: /etc/consul/conf.d/consul-ui.hcl }
+
+consul_template_conf:
+  - {src: files/consul-template/consul-template.hcl, dest: /etc/consul-template/conf.d/consul-template.hcl }
+  - {src: files/consul-template/ingress-gateway.conf.ctmpl, dest: /home/vagrant/ingress-gateway.conf.ctmpl }

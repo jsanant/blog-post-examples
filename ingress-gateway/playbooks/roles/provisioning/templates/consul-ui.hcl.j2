@@ -1,0 +1,15 @@
+service {
+  name = "consul-ui"
+  tags = [
+    "consul",
+    "ui"
+  ]
+  port = 8500
+  checks = {
+      id = "ui"
+      name = "UI TCP on port 8500"
+      tcp = "{{ ansible_eth1.ipv4.address }}:8500"
+      interval = "30s"
+      timeout = "5s"
+    }
+}

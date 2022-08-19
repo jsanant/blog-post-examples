@@ -1,0 +1,30 @@
+---
+- name: Download and install Consul
+  ansible.builtin.unarchive:
+    src: "{{ consul_url }}"
+    dest: /usr/local/bin/
+    remote_src: yes
+
+- name: Copy consul config files
+  ansible.builtin.copy:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+  loop: "{{ consul_config }}"
+
+- name: Download and install consul-template
+  ansible.builtin.unarchive:
+    src: "{{ consul_template_url }}"
+    dest: /usr/local/bin/
+    remote_src: yes
+
+- name: Copy consul-template conf files
+  ansible.builtin.copy:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+  loop: "{{ consul_template_conf }}"
+
+- name: Copy consul & consul-template template files
+  ansible.builtin.template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+  loop: "{{ template_files }}"

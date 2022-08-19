@@ -1,0 +1,27 @@
+[
+    {
+        "key": "ingress-gateway/hosts/consul.example.com",
+        "flags": 0,
+        "value": "cG9ydDogODAKcHJvdG9jb2w6IGh0dHAxCnNzbDogZmFsc2UKcm91dGVzOgotIHBhdGg6IC8KICBwcm94eVBhc3NQcm90b2NvbDogaHR0cAogIHByb3h5UGFzc1BhdGhTdWZmaXg6IC8KICBzZXJ2aWNlOiBjb25zdWwtdWk="
+    },
+    {
+        "key": "ingress-gateway/hosts/hello.example.com",
+        "flags": 0,
+        "value": "cG9ydDogODAKcHJvdG9jb2w6IGh0dHAxCnNzbDogZmFsc2UKcm91dGVzOgotIHBhdGg6IC8KICBwcm94eVBhc3NQcm90b2NvbDogaHR0cAogIHByb3h5UGFzc1BhdGhTdWZmaXg6IC8KICBzZXJ2aWNlOiBoZWxsby13b3JsZA=="
+    },
+    {
+        "key": "ingress-gateway/port",
+        "flags": 0,
+        "value": "ODA="
+    },
+    {
+        "key": "ingress-gateway/services",
+        "flags": 0,
+        "value": "aGVsbG8td29ybGQsY29uc3VsLXVp"
+    },
+    {
+        "key": "ingress-gateway/shared",
+        "flags": 0,
+        "value": "c3NsX3Nlc3Npb25fdGltZW91dDogMWQKc3NsX3Nlc3Npb25fY2FjaGU6IHNoYXJlZDpTU0w6NTBtCnNzbF9wcm90b2NvbHM6IFRMU3YxLjIKc3NsX2NpcGhlcnM6IEVFQ0RIK0FFU0dDTTpFREgrQUVTR0NNCnNzbF9wcmVmZXJfc2VydmVyX2NpcGhlcnM6ICJvbiI="
+    }
+]

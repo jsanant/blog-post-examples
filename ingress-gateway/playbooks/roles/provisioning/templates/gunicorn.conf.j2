@@ -1,0 +1,13 @@
+[program:gunicorn]
+directory=/home/vagrant/deploy/
+command=gunicorn --bind {{ ansible_eth1.ipv4.address }}:5000 wsgi:app
+autostart=true
+startsecs=10
+startretries=3
+exitcodes=0
+stopsignal=TERM
+stopwaitsecs=10
+stdout_logfile=/var/log/gunicorn.log
+stdout_logfile_backups=1
+stderr_logfile=/var/log/gunicorn-error.log
+stderr_logfile_backups=1

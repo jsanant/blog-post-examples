@@ -1,0 +1,81 @@
+---
+- name: Update repositories cache
+  ansible.builtin.apt:
+    update_cache: yes
+
+- name: Install packages
+  ansible.builtin.apt:
+    name: "{{ packages }}"
+    state: present
+
+- name: Create directories
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+  loop: "{{ directories }}"
+
+- name: Delete default NGINX config
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: absent
+  loop:
+    - /etc/nginx/sites-available/default
+    - /etc/nginx/sites-enabled/default
+
+- name: Generate self-signed certs
+  ansible.builtin.import_tasks: certs.yml
+
+- name: Install supervisor
+  ansible.builtin.import_tasks: supervisor.yml
+
+- name: Install consul
+  ansible.builtin.import_tasks: consul.yml
+
+- name: Install flask
+  ansible.builtin.import_tasks: flask.yml
+
+- name: Add consul env variables
+  ansible.builtin.template:
+    src: "templates/env.sh"
+    dest: "/etc/profile.d/env.sh"
+
+- name: Source the env variables file
+  ansible.builtin.command: "bash /etc/profile.d/env.sh"
+
+- name: Daemon reload
+  ansible.builtin.systemd:
+    daemon_reload: yes
+
+- name: Start and enable supervisor service
+  ansible.builtin.systemd:
+    name: supervisor.service
+    state: started
+    enabled: yes
+
+- name: Wait for consul to start
+  ansible.builtin.wait_for:
+    host: "{{ ansible_eth1.ipv4.address }}"
+    port: 8500
+    delay: 5
+
+- name: Copy Consul KV json
+  ansible.builtin.copy:
+    src: "files/consul-kv.json"
+    dest: "/home/vagrant/consul-kv.json"
+
+- name: Import Consul KV
+  ansible.builtin.command: "consul kv import -http-addr=http://{{ ansible_eth1.ipv4.address }}:8500  @/home/vagrant/consul-kv.json"
+
+- name: Start consul-template
+  community.general.supervisorctl:
+    name: consul-template
+    state: started
+
+- name: Update sshd_config to use rsa256/512  # More info here https://github.com/hashicorp/vagrant/issues/12681
+  ansible.builtin.lineinfile:
+    path: /etc/ssh/sshd_config
+    line: PubkeyAcceptedAlgorithms +ssh-rsa
+    state: present
+    validate: 'sshd -t -f %s'
+  notify: 
+    - restart ssh

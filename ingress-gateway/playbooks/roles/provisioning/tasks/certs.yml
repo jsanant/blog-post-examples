@@ -1,0 +1,26 @@
+---
+- name: Create private key
+  community.crypto.openssl_privatekey:
+    path: /local/certs/nginx-ca.pem
+
+- name: Create certificate signing request (CSR) for self-signed certificate
+  community.crypto.openssl_csr_pipe:
+    privatekey_path: /local/certs/nginx-ca.pem
+    common_name: example.com
+    organization_name: Example, Inc.
+    subject_alt_name:
+      - "DNS:example.com"
+      - "DNS:*.example.com"
+  register: csr
+
+- name: Create self-signed certificate from CSR
+  community.crypto.x509_certificate:
+    path: /local/certs/nginx-cert.pem
+    csr_content: "{{ csr.csr }}"
+    privatekey_path: /local/certs/nginx-ca.pem
+    provider: selfsigned
+
+- name: Generate DH Parameters
+  community.crypto.openssl_dhparam:
+    path: /local/certs/dhparam.pem
+    size: 2048

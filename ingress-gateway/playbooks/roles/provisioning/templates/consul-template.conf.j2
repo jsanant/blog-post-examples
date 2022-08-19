@@ -1,0 +1,12 @@
+[program:consul-template]
+command=/usr/local/bin/consul-template -config=/etc/consul-template/conf.d/consul-template.hcl -consul-addr="{{ ansible_eth1.ipv4.address }}:8500"
+autostart=false
+startsecs=10
+startretries=3
+exitcodes=0
+stopsignal=TERM
+stopwaitsecs=10
+stdout_logfile=/var/log/consul-template.log
+stdout_logfile_backups=1
+stderr_logfile=/var/log/consul-template-error.log
+stderr_logfile_backups=1

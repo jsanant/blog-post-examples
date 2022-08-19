@@ -1,0 +1,10 @@
+---
+- name: Install supervisor
+  ansible.builtin.pip:
+    name: supervisor
+
+- name: Copy supervisor config
+  ansible.builtin.copy:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+  loop: "{{ supervisor_config }}"

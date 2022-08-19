@@ -1,0 +1,8 @@
+---
+- name: restart gunicorn process
+  community.general.supervisorctl:
+    name: gunicorn
+    state: restarted
+
+- name: restart ssh
+  service: name=sshd state=restarted
