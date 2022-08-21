@@ -55,11 +55,11 @@ Once you are done, run `vagrant provision` so that the new changes are copied ov
 
 ### Adding new DNS entry in consul KV
 
-You can take a look at this demo on how to add a new DNS entry under the `ingress-gateway/hosts` folder
-
-![img](img/add-dns.gif)
+You can take a look at this demo on how to add a new DNS entry under the `ingress-gateway/hosts` folder.
 
 Don't forget to add the new DNS entry to the `/etc/hosts` file after you have added it to Consul KV!
+
+![img](img/add-dns.gif)
 
 ## Clean up
 
