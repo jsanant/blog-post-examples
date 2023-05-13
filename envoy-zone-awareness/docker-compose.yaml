@@ -1,0 +1,46 @@
+version: "3.5"
+services:
+  service-a-az1:
+    container_name: service-a-az1
+    image: zone-awareness:latest
+    ports:
+      - 9000:80
+    environment:
+      REGION: "us-east-1"
+      ZONE: "us-east-1a"
+      FLASK_DEBUG: "true"
+      CONTAINER_NAME: "service-a-az1"
+      SERVICE_B: "0.0.0.0:8082"
+      PORT: 8081
+      PYTHONUNBUFFERED: TRUE
+    restart: always
+  service-b-az1:
+    container_name: service-b-az1
+    image: zone-awareness:latest
+    depends_on:
+      - "service-a-az1"
+    ports:
+      - 9001:80
+    environment:
+      CONTAINER_NAME: "service-b-az1"
+      REGION: "us-east-1"
+      ZONE: "us-east-1a"
+      FLASK_DEBUG: "true"
+      PORT: 8082
+      PYTHONUNBUFFERED: TRUE
+    restart: always
+  service-b-az2:
+    container_name: service-b-az2
+    image: zone-awareness:latest
+    depends_on:
+      - "service-a-az1"
+    ports:
+      - 9002:80
+    environment:
+      CONTAINER_NAME: "service-b-az2"
+      REGION: "us-east-1"
+      ZONE: "us-east-1b"
+      FLASK_DEBUG: "true"
+      PORT: 8082
+      PYTHONUNBUFFERED: TRUE
+    restart: always
