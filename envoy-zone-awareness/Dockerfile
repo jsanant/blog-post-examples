@@ -1,4 +1,4 @@
-FROM python:3.9-slim
+FROM --platform=linux/x86_64 python:3.9-slim
 
 RUN apt-get update -y
 RUN apt-get install curl wget procps vim net-tools -y

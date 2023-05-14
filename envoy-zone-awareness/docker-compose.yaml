@@ -3,6 +3,7 @@ services:
   service-a-az1:
     container_name: service-a-az1
     image: zone-awareness:latest
+    platform: linux/x86_64
     ports:
       - 9000:80
     environment:
@@ -17,6 +18,7 @@ services:
   service-b-az1:
     container_name: service-b-az1
     image: zone-awareness:latest
+    platform: linux/x86_64
     depends_on:
       - "service-a-az1"
     ports:
@@ -32,6 +34,7 @@ services:
   service-b-az2:
     container_name: service-b-az2
     image: zone-awareness:latest
+    platform: linux/x86_64
     depends_on:
       - "service-a-az1"
     ports:
